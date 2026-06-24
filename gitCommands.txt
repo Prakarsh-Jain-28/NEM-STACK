@@ -1,0 +1,30 @@
+Pushing your local repository to GitHub:
+
+    Step 1: Create your .gitignore File
+        Contains:
+        # Block all node_modules dependencies
+        # Block your local tracking log files so they don't leak on GitHub
+        # Skip a specific lecture or testing folder (Replace 'Folder-Name/' with your exact folder name)
+        # Block environment variables/secrets if you use them later
+        
+    Step 2: Initialize Git and Stage Your Code
+        git init
+        git add .
+        git status
+        git commit -m "Initial commit"
+
+    Step 3: Link and Push to GitHub
+        1. On Your Github -> Create New Repo
+        2. Name that New Repo -> Click Create
+        3. Run these commands:
+            git branch -M main
+            git remote add origin (Link of Repo)
+            git push -u origin main
+
+
+
+Commiting Changes afterwards:
+    git status
+    git add .
+    git commit -m "Message"
+    git push
