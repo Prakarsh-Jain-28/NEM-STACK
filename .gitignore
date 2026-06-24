@@ -1,0 +1,7 @@
+testt/
+node_modules/
+
+*.log
+log.txt
+
+.env
