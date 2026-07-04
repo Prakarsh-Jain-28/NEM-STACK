@@ -1,5 +1,9 @@
 // Status Code Demonstration
 
+    // 400 - Bad Request
+    // 404 - Not Found
+    // 200 - OK
+
 const express = require("express");
 const users = require("../MOCK_DATA.json");
 
