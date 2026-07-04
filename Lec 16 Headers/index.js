@@ -1,4 +1,4 @@
-//Get Post Patch Put Delete all Http Methods implemented
+// HTTP Headers.......
 
 const express = require("express");
 const users = require("../MOCK_DATA.json");
@@ -7,9 +7,44 @@ const fs = require("fs");
 const app = express();
 let myName = "Unknown User";
 
-//Middleware
+//Built-in Middleware
 app.use(express.urlencoded({extended: false}));
 
+//User Middleware Says Hello && Constructs a User Response Header
+app.use((req,res,next)=>{
+    console.log("Hello from Middleware");
+    
+    const newHeader = new Headers({
+        "X-myName" : "Herobrine",
+        "X-roll" : "18"
+    });
+    res.setHeaders(newHeader)
+    next();
+});
+
+//User Middleware logs Data && Console Logs Request Headers
+app.use((req,res,next)=>{
+
+    fs.appendFile("./log.txt",`\n${Date.now()}: ${req.method}: ${req.path}`,(err)=>{
+        if(err) return res.status(500).json({ status: "Error Middleware", message: "Failed to log to file" });
+        console.log(`${req.path}\n`, req.headers, `\n\n`);
+    });
+
+    next();
+});
+
+//html documentation of all users
+app.get("/users",(req,res)=>{
+    const html = `
+    <ul>
+        ${users.map(user=>`<li>${user.first_name} ${user.last_name}`).join("")}
+    </ul>`;
+    res.send(html);
+});
+
+
+
+// **Same code as Lec 14**
 
 app.route("/api/users")
     .get((req,res)=>{
@@ -113,15 +148,5 @@ app.route("/api/users/:id")
         });
     });
 
-
-
-//html documentation of all users
-app.get("/users",(req,res)=>{
-    const html = `
-    <ul>
-        ${users.map(user=>`<li>${user.first_name} ${user.last_name}`).join("")}
-    </ul>`;
-    res.send(html);
-});
 
 app.listen(8000, () => console.log("Server Started!"));
