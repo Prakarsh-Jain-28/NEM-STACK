@@ -7,13 +7,24 @@ let myName = "Unknown User";
 
 //Built-in Middleware
 app.use(express.urlencoded({extended: false}));
-//User Middleware
+
+//User Middleware says hello
 app.use((req,res,next)=>{
     console.log("Hello from Middleware");
     next();
 });
 
+//User Middleware logs Data
+app.use((req,res,next)=>{
 
+    fs.appendFile("./log.txt",`\n${Date.now()}: ${req.method}: ${req.path}`,(err)=>{
+        if(err) return res.status(500).json({ status: "Error Middleware", message: "Failed to log to file" });
+    });
+    next();
+});
+
+
+//Same code as Lec 14
 app.route("/api/users")
     .get((req,res)=>{
         return res.json(users);
