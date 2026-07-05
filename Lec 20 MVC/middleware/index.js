@@ -12,6 +12,12 @@ function logReqRes(filename)
         );
     };
 }
+//structure of middleware
+// app.use((req,res,next)=>{
+//     //function
+//     next();
+// })
+
 
 module.exports = {
     logReqRes,
