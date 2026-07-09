@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1 style="margin: 0;">URL Shortener</h1>
+
+        <a
+            href="/"
+            style="
+                text-decoration: none;
+                background-color: #007bff;
+                color: white;
+                padding: 8px 16px;
+                border-radius: 5px;
+                font-family: sans-serif;
+            "
+        >
+            ← Back
+        </a>
+    </div>
+    <br>
+    <div>
+        <form method="post" action="/url">
+            <label> Enter Original URL</label>
+            <input type = "text" placeholder="https://example.com" name = "url" />
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <br><br>
+    <div>
+        <% if (locals.id) { %>
+            Original URL: <%= originalURL %>
+            <br>
+            Shortened URL: http://localhost:<%= port %>/url/<%= id %>
+        <% } %>
+    </div>
+
+    <br><br><br>
+    <div>
+        <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th>S. No.</th>
+                    <th>Original URL</th>
+                    <th>Short URL</th>
+                    <th>Clicks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% urls.forEach((url, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td>
+                            <a href="<%= url.redirectURL %>" target="_blank">
+                                <%= url.redirectURL %>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/url/<%= url.shortId %>" target="_blank">
+                                http://localhost:<%= port %>/url/<%= url.shortId %>
+                            </a>
+                        </td>
+                        <td><%= url.visitHistory.length %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
