@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+</head>
+<body>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+
+        <h1 style="margin:0;">URL Shortener</h1>
+
+        <div style="display:flex; gap:10px;">
+
+            <a
+                href="/"
+                style="
+                    text-decoration:none;
+                    background:#007bff;
+                    color:white;
+                    padding:8px 16px;
+                    border-radius:5px;
+                    font-family:sans-serif;
+                "
+            >
+                Home
+            </a>
+
+            <% if (user && user.role === "ADMIN") { %>
+
+                <a
+                    href="/admin"
+                    style="
+                        text-decoration:none;
+                        background:#28a745;
+                        color:white;
+                        padding:8px 16px;
+                        border-radius:5px;
+                        font-family:sans-serif;
+                    "
+                >
+                    Admin Dashboard
+                </a>
+
+            <% } %>
+
+            <a
+                href="/user/logout"
+                style="
+                    text-decoration:none;
+                    background:#dc3545;
+                    color:white;
+                    padding:8px 16px;
+                    border-radius:5px;
+                    font-family:sans-serif;
+                "
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <br>
+
+    <form method="POST" action="/url">
+
+        <label><b>Enter Original URL</b></label>
+
+        <input
+            type="text"
+            name="url"
+            placeholder="https://example.com"
+            required
+            style="width:350px; padding:8px;"
+        >
+
+        <button
+            type="submit"
+            style="
+                padding:8px 15px;
+                background:#007bff;
+                color:white;
+                border:none;
+                border-radius:5px;
+                cursor:pointer;
+            "
+        >
+            Submit
+        </button>
+
+    </form>
+
+    <br><br>
+
+    <% if (locals.id) { %>
+
+        <div style="padding:15px; background:#f2f2f2; border-radius:5px; width:fit-content;">
+
+            <b>Original URL:</b>
+
+            <a href="<%= originalURL %>" target="_blank">
+                <%= originalURL %>
+            </a>
+
+            <br><br>
+
+            <b>Short URL:</b>
+
+            <a href="/url/<%= id %>" target="_blank">
+                http://localhost:<%= port %>/url/<%= id %>
+            </a>
+
+        </div>
+
+    <% } %>
+
+    <br><br>
+
+    <table
+        border="1"
+        cellpadding="10"
+        cellspacing="0"
+        style="
+            width:100%;
+            border-collapse:collapse;
+            text-align:left;
+        "
+    >
+
+        <thead>
+
+            <tr style="background:#f2f2f2;">
+
+                <th>S. No.</th>
+                <th>Original URL</th>
+                <th>Short URL</th>
+                <th>Clicks</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <% urls.forEach((url,index)=>{ %>
+
+                <tr>
+
+                    <td><%= index + 1 %></td>
+
+                    <td>
+                        <a href="<%= url.redirectURL %>" target="_blank">
+                            <%= url.redirectURL %>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="/url/<%= url.shortId %>" target="_blank">
+                            http://localhost:<%= port %>/url/<%= url.shortId %>
+                        </a>
+                    </td>
+
+                    <td><%= url.visitHistory.length %></td>
+
+                </tr>
+
+            <% }) %>
+
+        </tbody>
+
+    </table>
+
+</body>
+</html>

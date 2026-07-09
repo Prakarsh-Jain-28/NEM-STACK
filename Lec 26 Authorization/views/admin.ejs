@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+
+        <h1 style="margin:0;">Admin Dashboard</h1>
+
+        <div style="display:flex;gap:10px;">
+
+            <a
+                href="/"
+                style="
+                    text-decoration:none;
+                    background:#007bff;
+                    color:white;
+                    padding:8px 16px;
+                    border-radius:5px;
+                "
+            >
+                Home
+            </a>
+
+            <a
+                href="/user/logout"
+                style="
+                    text-decoration:none;
+                    background:#dc3545;
+                    color:white;
+                    padding:8px 16px;
+                    border-radius:5px;
+                "
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <br>
+
+    <table
+        border="1"
+        cellpadding="10"
+        cellspacing="0"
+        style="
+            width:100%;
+            border-collapse:collapse;
+            text-align:left;
+        "
+    >
+
+        <thead>
+
+            <tr style="background:#f2f2f2;">
+
+                <th>S. No.</th>
+                <th>Original URL</th>
+                <th>Short URL</th>
+                <th>Clicks</th>
+                <th>Username</th>
+                <th>Email</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <% urls.forEach((url,index)=>{ %>
+
+                <tr>
+
+                    <td><%= index + 1 %></td>
+
+                    <td>
+
+                        <a href="<%= url.redirectURL %>" target="_blank">
+
+                            <%= url.redirectURL %>
+
+                        </a>
+
+                    </td>
+
+                    <td>
+
+                        <a href="/url/<%= url.shortId %>" target="_blank">
+
+                            http://localhost:<%= port %>/url/<%= url.shortId %>
+
+                        </a>
+
+                    </td>
+
+                    <td>
+
+                        <%= url.visitHistory.length %>
+
+                    </td>
+
+                    <td>
+
+                        <%= url.createdBy.name %>
+
+                    </td>
+
+                    <td>
+
+                        <%= url.createdBy.email %>
+
+                    </td>
+
+                </tr>
+
+            <% }) %>
+
+        </tbody>
+
+    </table>
+
+</body>
+</html>

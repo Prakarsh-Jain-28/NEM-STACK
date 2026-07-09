@@ -50,12 +50,17 @@ async function UserLogin(req, res) {
 
     //setting cookie
     const token = setUser(user);
-    // res.json({token});
+    res.cookie("uid",token);
     // Login successful
     return res.redirect("/");
+}
+async function UserLogout(req, res) {
+    res.clearCookie("uid");
+    return res.redirect("/user/login");
 }
 
 module.exports = {
     UserSignUp,
     UserLogin,
+    UserLogout
 }
