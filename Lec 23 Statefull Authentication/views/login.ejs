@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1 style="margin: 0;">URL Shortener</h1>
+
+        <a
+            href="/"
+            style="
+                text-decoration: none;
+                background-color: #007bff;
+                color: white;
+                padding: 8px 16px;
+                border-radius: 5px;
+                font-family: sans-serif;
+            "
+        >
+            ← Back
+        </a>
+    </div>
+
+    <hr><br>
+
+    <div style="width:350px; margin:auto;">
+
+        <h2>Login</h2>
+
+        <form method="POST" action="/user/login">
+
+            <div style="margin-bottom:15px;">
+                <label>Email</label><br>
+
+                <input
+                    type="email"
+                    name="email"
+                    value="<%= values?.email || '' %>"
+                    style="width:100%; padding:8px;"
+                    required
+                >
+
+                <% if (errors?.email) { %>
+                    <p style="color:red; margin:5px 0;">
+                        <%= errors.email.message %>
+                    </p>
+                <% } %>
+            </div>
+
+            <div style="margin-bottom:15px;">
+                <label>Password</label><br>
+
+                <input
+                    type="password"
+                    name="password"
+                    style="width:100%; padding:8px;"
+                    required
+                >
+
+                <% if (errors?.password) { %>
+                    <p style="color:red; margin:5px 0;">
+                        <%= errors.password.message %>
+                    </p>
+                <% } %>
+            </div>
+
+            <button
+                type="submit"
+                style="
+                    background:#007bff;
+                    color:white;
+                    border:none;
+                    padding:10px 20px;
+                    border-radius:5px;
+                    cursor:pointer;
+                "
+            >
+                Login
+            </button>
+
+        </form>
+
+        <br>
+
+        <p>
+            Don't have an account?
+            <a href="/user/signup">Sign Up</a>
+        </p>
+
+    </div>
+
+</body>
+</html>

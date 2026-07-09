@@ -32,6 +32,7 @@ async function PostUrl(req, res) {
         redirectURL: body.url,
         shortId: id,
         visitHistory: [],
+        createdBy: req.user._id,
     });
 
     const allUrls = await URL.find({});

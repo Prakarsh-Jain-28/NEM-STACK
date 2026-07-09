@@ -2,10 +2,13 @@ require("dotenv").config();
 
 const URL = require("./models/url");
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const connectMongoDB = require("./connection");
 const urlRouter = require("./routes/url");
+const userRouter = require("./routes/user");
 const staticRouter = require("./routes/staticRouter");
-const logReqRes = require("./middleware");
+const logReqRes = require("./middleware/index");
+const {loginRestriction} = require("./middleware/Auth");
 
 const path = require("path");
 
@@ -24,11 +27,13 @@ app.set("views",path.resolve("./views"));
 //middleware
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(cookieParser());
 app.use(logReqRes("log.txt"));
 
 //routes
 
-app.use("/url",urlRouter);
-app.use("/",staticRouter);
+app.use("/url",loginRestriction,urlRouter);
+app.use("/user",userRouter);
+app.use("/",loginRestriction,staticRouter);
 
 app.listen(process.env.PORT,()=>{console.log("Server Started")});
