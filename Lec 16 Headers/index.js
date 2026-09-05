@@ -66,6 +66,7 @@ app.route("/api/users")
 app.route("/api/users/:id")
     .get((req,res)=>{
         const id = Number(req.params.id);
+        if(!id) res.status(400).json({error:"Invalid ID"})
         const user = users.find((user)=>user.id===id);
         if(user) return res.json(user);
         else res.status(400).json({error: "Invalid User ID"});
